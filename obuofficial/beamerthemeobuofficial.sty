@@ -1,0 +1,212 @@
+% Beamer port of the official OBU theme
+% https://github.com/rlridenour/beamer-themes/obuofficial
+
+
+% Adapted from the Auriga theme
+% https://github.com/anishathalye/auriga
+
+% ====================
+% Options
+% ====================
+
+\newif\if@doSections
+\@doSectionsfalse
+\DeclareOption{sections}{\@doSectionstrue}
+
+\ProcessOptions
+
+% ====================
+% Dependencies
+% ====================
+
+\RequirePackage{exscale}
+\RequirePackage{ragged2e}
+\RequirePackage{changepage}
+\RequirePackage[T1]{fontenc}
+% \RequirePackage{fontspec}
+\RequirePackage{xpatch}
+% \RequirePackage{luatextra}
+\RequirePackage[absolute,overlay]{textpos}
+\RequirePackage{calc}
+\RequirePackage{helvet}
+\RequirePackage{mathastext}
+\RequirePackage{isomath}
+\RequirePackage{tikz}
+\RequirePackage{tikzpagenodes}
+
+
+% ====================
+% Fonts
+% ====================
+
+
+\AtBeginDocument{%
+  \DeclareMathSymbol{0}{\mathalpha}{operators}{`0}%
+  \DeclareMathSymbol{1}{\mathalpha}{operators}{`1}%
+  \DeclareMathSymbol{2}{\mathalpha}{operators}{`2}%
+  \DeclareMathSymbol{3}{\mathalpha}{operators}{`3}%
+  \DeclareMathSymbol{4}{\mathalpha}{operators}{`4}%
+  \DeclareMathSymbol{5}{\mathalpha}{operators}{`5}%
+  \DeclareMathSymbol{6}{\mathalpha}{operators}{`6}%
+  \DeclareMathSymbol{7}{\mathalpha}{operators}{`7}%
+  \DeclareMathSymbol{8}{\mathalpha}{operators}{`8}%
+  \DeclareMathSymbol{9}{\mathalpha}{operators}{`9}%
+}
+
+\setbeamerfont{title page title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{title page subtitle}{size=\large,series=\bfseries}
+\setbeamerfont{title page author}{size=\small}
+\setbeamerfont{title page institute}{size=\footnotesize}
+\setbeamerfont{section page}{size=\Large,series=\bfseries}
+\setbeamerfont{subsection page}{size=\large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{caption}{size=\footnotesize}
+
+
+% ====================
+% Macros
+% ====================
+
+\newcommand{\samelineand}{\qquad}
+
+% ====================
+% Elements
+% ====================
+
+% Itemize
+
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[circle]
+\xpatchcmd{\itemize}
+{\def\makelabel}
+{\ifnum\@itemdepth=1\relax
+    \setlength\itemsep{1.5ex}% separation for first level
+  \else
+    \ifnum\@itemdepth=2\relax
+      \setlength\itemsep{0.5ex}% separation for second level
+    \else
+      \ifnum\@itemdepth=3\relax
+        \setlength\itemsep{0.5ex}% separation for third level
+      \fi\fi\fi\def\makelabel
+}
+{}
+{}
+
+
+% Enumerate
+
+\setbeamertemplate{enumerate subitem}{\alph{enumii}.}
+% \setbeamertemplate{enumerate subsubitem}[]
+\setbeamertemplate{enumerate subsubitem}{\insertenumlabel)}
+% Equation
+\setlength\belowdisplayshortskip{2ex}
+
+% Caption
+\setlength{\abovecaptionskip}{2ex}
+\setlength{\belowcaptionskip}{1ex}
+\setbeamertemplate{caption}
+{
+  {\usebeamerfont{caption}\insertcaption}
+}
+
+% Navigation
+\beamertemplatenavigationsymbolsempty
+
+% ====================
+% Components
+% ====================
+
+
+% Page size
+
+
+
+
+
+% OBU background
+
+\setbeamertemplate{background}
+{
+
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+
+    \node[anchor=north west,inner sep=0pt] (NW) at (0.5,0.89\paperheight){};
+    \node[anchor=north east,inner sep=0pt] (NE) at (0.97\paperwidth,0.89\paperheight){};
+    \node[anchor=south east,inner sep=0pt] (SE) at (\the\paperwidth,0.6){};
+    \node[anchor=south east,inner sep=0pt] (ESE) at (0.97\paperwidth,0.45\paperheight){};
+    \node[anchor=south east,inner sep=0pt] (SSE) at (0.65\paperwidth,0.8){};
+        \node[anchor=south east,inner sep=0pt] (OBU) at (0.99\paperwidth,0.5){\includegraphics[scale=0.25]{OBU-Green.png}};
+    \node[anchor=south west,inner sep=0pt] (SW) at (0.5,0.8){};
+    \draw[line width=3,OBUgreen] (SSE.center) -- (SW.center) -- (NW.center) -- (NE.center) -- (ESE.center);
+
+  \end{tikzpicture}
+
+}
+
+\setbeamertemplate{headline}{\vskip30pt}
+\setbeamertemplate{frametitle}{\vspace*{0cm}}{\vspace*{-25pt}}
+
+% Title page
+
+
+  \setbeamertemplate{title page}
+  {
+  \begin{centering}
+    \vspace*{\fill}
+        {\usebeamerfont{title page title}\usebeamercolor[fg]{title page}\inserttitle\par\vspace{0.5ex}}
+        {\usebeamerfont{title page subtitle}\usebeamercolor[fg]{title page}\insertsubtitle\par\vspace{1.5ex}}
+        {\usebeamerfont{title page author}\usebeamercolor[fg]{title page}\insertauthor\par\vspace{1ex}}
+        {\usebeamerfont{title page institute}\usebeamercolor[fg]{title page}\insertinstitute\par\vspace{1ex}}
+        {\usebeamerfont{title page institute}\usebeamercolor[fg]{title page}\insertdate\par\vspace{1ex}}
+    \vspace*{\fill}
+  \end{centering}
+  }
+
+
+
+
+
+% Sections
+
+% Section page
+\setbeamertemplate{section page}
+{
+  \begin{centering}
+    \vspace*{\fill}
+    {\usebeamerfont{title page title}\usebeamercolor[fg]{title page}\insertsection\\[1.5ex]}
+    \vspace*{\fill}
+  \end{centering}
+  \framebreak
+}
+
+% Subsection page
+\setbeamertemplate{subsection page}
+{
+  % \begin{centering}
+  \vspace*{\fill}
+  {\usebeamerfont{subsection page}\usebeamercolor[fg]{title page}\insertsubsection\\[1.5ex]}
+  \vspace*{\fill}
+  % \end{centering}
+  \framebreak
+}
+
+
+\if@doSections
+  \AtBeginSection[]{
+    \sectionpage
+  }
+  \AtBeginSubsection[]{
+    \subsectionpage
+  }
+\fi
+
+% Frame title
+\setbeamertemplate{frametitle}{
+  \nointerlineskip
+  \vskip2ex
+  {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle}
+}
+
+\usecolortheme{obuofficial}
